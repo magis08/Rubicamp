@@ -23,7 +23,8 @@ function sentencesManipulation(sentence) {
 
     return hasilArray.join(" ");
 }
-rl.question('tulis kalimatmu disini: ', (inputSentence) => {
+rl.on('line', (inputSentence) => {
+    console.log(`tulis kalimatmu di sini> ${inputSentence}`)
     const hasil = sentencesManipulation(inputSentence)
     console.log(`hasil konversi: ${hasil}`)
 
