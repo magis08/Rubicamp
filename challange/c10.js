@@ -2,8 +2,10 @@ const readline = require('readline')
 
 const rl = readline.createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
+    prompt: 'tulis kalimatmu di sini>'
 })
+rl.prompt()
 
 function sentencesManipulation(sentence) {
     const vocal = ['a', 'i', 'u', 'e', 'o', 'A', 'I', 'U', 'E', 'O'];
@@ -28,7 +30,7 @@ rl.on('line', (inputSentence) => {
     const hasil = sentencesManipulation(inputSentence)
     console.log(`hasil konversi: ${hasil}`)
 
-    rl.close
+    rl.prompt()
 })
 
 rl.on('close', () => {
