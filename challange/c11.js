@@ -3,22 +3,8 @@ const readline = require('readline')
 
 // Membaca dan mem-parsing file JSON
 fs.readFile('data.json', 'utf8', (err, data) => {
-    if (err) {
-        console.error('Error reading file:', err)
-        return
-    }
     let tebakKata
-    try {
         tebakKata = JSON.parse(data)
-    } catch (parseError) {
-        console.error('Error parsing JSON:', parseError)
-        return
-    }
-    
-    if (!Array.isArray(tebakKata.tebak)) {
-        console.error('Properti "tebak" bukan array atau tidak ada')
-        return
-    }
 
     const rl = readline.createInterface({
         input: process.stdin,
