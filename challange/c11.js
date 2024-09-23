@@ -35,16 +35,16 @@ fs.readFile('data.json', 'utf8', (err, data) => {
                 const jawaban = jawabanPengguna.trim().toLowerCase()
 
                 if (jawaban === jawabanBenar) {
-                    console.log('Selamat Anda benar!\n')
+                    console.log('Kelas, prince!\n')
                     pertanyaanIndex += 1
                     tanyakanPertanyaan(); // Panggil fungsi untuk pertanyaan berikutnya
                 } else {
-                    console.log('Salah lu ndro!\n')
+                    console.log('Coba lagi, prince!\n')
                     tanyakanPertanyaan(); // Ulangi pertanyaan yang sama
                 }
             })
         } else {
-            console.log('Hore Anda Menang!')
+            console.log('Kelas king, mahkotamu lagi transit di DC Cakung!')
             rl.close()
         }
     }
