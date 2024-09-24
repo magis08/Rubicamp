@@ -35,7 +35,7 @@ fs.readFile('data.json', 'utf8', (err, data) => {
                 if (pertanyaanIndex < tebakKata.tebak.length) {
                     console.log(`Pertanyaan ${pertanyaanIndex + 1}: ${tebakKata.tebak[pertanyaanIndex].definition}`)
                     } else {
-                        console.log('Hore Anda Menang!')
+                        console.log('Hore Anda Menang!\n')
                         rl.close()
                     } 
                     } else {

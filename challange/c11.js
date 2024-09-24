@@ -18,19 +18,18 @@ fs.readFile('data.json', 'utf8', (err, data) => {
                 const jawaban = jawabanPengguna.trim().toLowerCase()
 
                 if (jawaban === jawabanBenar) {
-                    console.log('Kelas, prince!\n')
+                    console.log('Jawabanmu benar!\n')
                     pertanyaanIndex += 1
                     tanyakanPertanyaan(); // Panggil fungsi untuk pertanyaan berikutnya
                 } else {
-                    console.log('Coba lagi, prince!\n')
+                    console.log('Coba lagi, jawabanmu kurang tepat!\n')
                     tanyakanPertanyaan(); // Ulangi pertanyaan yang sama
                 }
             })
         } else {
-            console.log('Kelas king, mahkotamu lagi transit di DC Cakung!\n')
+            console.log('Selamat, kamu menang!\n')
             rl.close()
         }
     }
-    // Mulai dengan pertanyaan pertama
-    tanyakanPertanyaan();
+    tanyakanPertanyaan()
 })
