@@ -10,9 +10,7 @@ fs.readFile('data.json', 'utf8', (err, data) => {
         output: process.stdout
     })
     let pertanyaanIndex = 0
-    const tanyakanPertanyaan = () => {
-        if (pertanyaanIndex < tebakKata.tebak.length) {
-            console.log(`Pertanyaan: ${tebakKata.tebak[pertanyaanIndex].definition}`)
+    const mintaJawaban = () => {
             rl.question('Tebakan: ', (jawabanPengguna) => {
                 const jawabanBenar = tebakKata.tebak[pertanyaanIndex].term.toString().toLowerCase()
                 const jawaban = jawabanPengguna.trim().toLowerCase()
@@ -23,9 +21,14 @@ fs.readFile('data.json', 'utf8', (err, data) => {
                     tanyakanPertanyaan(); // Panggil fungsi untuk pertanyaan berikutnya
                 } else {
                     console.log('Coba lagi, jawabanmu kurang tepat!\n')
-                    tanyakanPertanyaan(); // Ulangi pertanyaan yang sama
+                    mintaJawaban(); // Ulangi pertanyaan yang sama
                 }
             })
+    }
+    const tanyakanPertanyaan = () => {
+        if (pertanyaanIndex < tebakKata.tebak.length) {
+            console.log(`Pertanyaan: ${tebakKata.tebak[pertanyaanIndex].definition}`)
+            mintaJawaban()
         } else {
             console.log('Selamat, kamu menang!\n')
             rl.close()
