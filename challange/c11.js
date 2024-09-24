@@ -3,7 +3,7 @@ const readline = require('readline')
 
 fs.readFile('data.json', 'utf8', (err, data) => {
     let tebakKata
-         tebakKata = JSON.parse(data)
+    tebakKata = JSON.parse(data)
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
@@ -25,13 +25,13 @@ fs.readFile('data.json', 'utf8', (err, data) => {
             } else {
                 console.log('Hore Anda Menang!\n')
                 rl.close()
-            } 
+            }
         } else {
             console.log('Anda kurang beruntung!\n')
         }
         rl.prompt();
-    }) .on('close', () => {
+    }).on('close', () => {
         process.exit(0);
-      }); 
+    });
 }
 )
