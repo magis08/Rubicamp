@@ -25,7 +25,7 @@ fs.readFile('data.json', 'utf8', (err, data) => {
     let pertanyaanIndex = 0
     console.log(`Pertanyaan ${pertanyaanIndex + 1}: ${tebakKata.tebak[pertanyaanIndex].definition}`)
 
-    rl.question('Tebakan: ',(jawabanPengguna) => {
+    rl.on('line',(jawabanPengguna) => {
         const jawabanBenar = tebakKata.tebak[pertanyaanIndex].term.toString().toLowerCase()
         const jawaban = jawabanPengguna.trim().toLowerCase()
 
