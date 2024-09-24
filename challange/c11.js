@@ -27,7 +27,7 @@ fs.readFile('data.json', 'utf8', (err, data) => {
                 }
             })
         } else {
-            console.log('Kelas king, mahkotamu lagi transit di DC Cakung!')
+            console.log('Kelas king, mahkotamu lagi transit di DC Cakung!\n')
             rl.close()
         }
     }
