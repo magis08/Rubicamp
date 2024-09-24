@@ -12,7 +12,7 @@ fs.readFile('data.json', 'utf8', (err, data) => {
     let pertanyaanIndex = 0
     const tanyakanPertanyaan = () => {
         if (pertanyaanIndex < tebakKata.tebak.length) {
-            console.log(`Pertanyaan ${pertanyaanIndex + 1}: ${tebakKata.tebak[pertanyaanIndex].definition}`)
+            console.log(`Pertanyaan: ${tebakKata.tebak[pertanyaanIndex].definition}`)
             rl.question('Tebakan: ', (jawabanPengguna) => {
                 const jawabanBenar = tebakKata.tebak[pertanyaanIndex].term.toString().toLowerCase()
                 const jawaban = jawabanPengguna.trim().toLowerCase()
