@@ -1,16 +1,14 @@
-{
-    "tebak": [
-        {
-            "definition": "siapa presiden indonesia saat ini?",
-            "term": "jokowi"
-        },
-        {
-            "definition": "tahun berapa indonesia merdeka?",
-            "term": "1945"
-        },
-        {
-            "definition": "sebutkan kota yang memiliki julukan kota intan?",
-            "term": "garut"
-        }
-    ]
-}
+[
+    {
+        "definition": "siapa presiden indonesia saat ini?",
+        "term": "jokowi"
+    },
+    {
+        "definition": "tahun berapa indonesia merdeka?",
+        "term": "1945"
+    },
+    {
+        "definition": "sebutkan kota yang memiliki julukan kota intan?",
+        "term": "garut"
+    }
+]
