@@ -1,13 +1,26 @@
 const fs = require('fs');
 const readline = require('readline');
 
-fs.readFile('data.json', 'utf8', (err, data) => {
-    if (err) {
-        console.error('Error reading file:', err);
-        return;
-    }
+// Mengambil file JSON dari argumen command line
+const args = process.argv.slice(2);
+
+if (args.length !== 1) {
+    console.log('Penggunaan: node file.js <nama-file-json>');
+    process.exit(1);
+}
+
+const filePath = args[0];
+
+// Membaca file JSON
+fs.readFile(filePath, 'utf8', (err, data) => {
 
     let tebakKata = JSON.parse(data);
+
+    if (!tebakKata || !Array.isArray(tebakKata)) {
+        console.error('Format file JSON tidak valid.');
+        process.exit(1);
+    }
+
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
@@ -19,16 +32,15 @@ fs.readFile('data.json', 'utf8', (err, data) => {
     let totalPertanyaan = tebakKata.length;
 
     const tanya = () => {
-        // Pastikan pertanyaan index valid
         if (pertanyaanIndex < totalPertanyaan) {
             console.log(`Pertanyaan: ${tebakKata[pertanyaanIndex].definition}`);
             rl.prompt();
         } else if (skipPertanyaan.length > 0) {
-            // Reset untuk pertanyaan yang diskip
             tebakKata = skipPertanyaan;
             pertanyaanIndex = 0;
             totalPertanyaan = skipPertanyaan.length;
-            tanya(); // tanya pertanyaan yang diskip
+            skipPertanyaan = [];
+            tanya();
         } else {
             console.log('Hore Anda Menang!\n');
             rl.close();
@@ -43,14 +55,13 @@ fs.readFile('data.json', 'utf8', (err, data) => {
 
         if (jawaban === jawabanBenar) {
             console.log('Selamat Anda benar!\n');
-            // Hapus pertanyaan yang sudah dijawab
             tebakKata.splice(pertanyaanIndex, 1);
-            totalPertanyaan -= 1; // Kurangi total pertanyaan
+            totalPertanyaan -= 1;
         } else if (jawaban === 'skip') {
-            console.log('Anda telah melewatkan pertanyaan ini.\n');
-            skipPertanyaan.push(tebakKata[pertanyaanIndex]); // Simpan pertanyaan yang diskip
-            tebakKata.splice(pertanyaanIndex, 1); // Hapus pertanyaan dari daftar
-            totalPertanyaan -= 1; // Kurangi total pertanyaan
+            console.log('Pertanyaan diskip.\n');
+            skipPertanyaan.push(tebakKata[pertanyaanIndex]);
+            tebakKata.splice(pertanyaanIndex, 1);
+            totalPertanyaan -= 1;
         } else {
             console.log('Anda kurang beruntung!\n');
         }
