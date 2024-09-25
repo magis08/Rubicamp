@@ -5,7 +5,6 @@ const readline = require('readline');
 const args = process.argv.slice(2);
 
 if (args.length !== 1) {
-    console.log('Penggunaan: node file.js <nama-file-json>');
     process.exit(1);
 }
 
