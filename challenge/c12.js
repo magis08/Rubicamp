@@ -30,7 +30,7 @@ fs.readFile(filePath, 'utf8', (err, data) => {
     let pertanyaanIndex = 0;
     let skipPertanyaan = [];
     let totalPertanyaan = tebakKata.length;
-    let wrongCount = 0; // Variabel untuk menghitung kesalahan
+    let totalSalah = 0; // Variabel untuk menghitung kesalahan
 
     // Tampilkan pertanyaan pertama sekali saja
     const tanya = () => {
@@ -59,18 +59,18 @@ fs.readFile(filePath, 'utf8', (err, data) => {
             console.log('Selamat Anda benar!\n');
             tebakKata.splice(pertanyaanIndex, 1);
             totalPertanyaan -= 1;
-            wrongCount = 0; // Reset kesalahan setelah jawaban benar
+            totalSalah = 0; // Reset kesalahan setelah jawaban benar
             tanya();
         } else if (jawaban === 'skip') {
             console.log('Pertanyaan diskip.\n');
             skipPertanyaan.push(tebakKata[pertanyaanIndex]);
             tebakKata.splice(pertanyaanIndex, 1);
             totalPertanyaan -= 1;
-            wrongCount = 0; // Reset kesalahan jika skip
+            totalSalah = 0; // Reset kesalahan jika skip
             tanya();
         } else {
-            wrongCount += 1; // Tambahkan kesalahan setiap jawaban salah
-            console.log(`Kamu telah salah ${wrongCount}x. Silakan coba lagi.`);
+            totalSalah += 1; // Tambahkan kesalahan setiap jawaban salah
+            console.log(`Kamu telah salah ${totalSalah}x. Silakan coba lagi.`);
             rl.prompt(); // Langsung ke interface tebakan tanpa mengulang pertanyaan
         }
     }).on('close', () => {
