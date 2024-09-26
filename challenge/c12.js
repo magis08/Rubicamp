@@ -8,18 +8,11 @@ if (args.length !== 1) {
     process.exit(1)
 }
 
-const filePath = args[0]
-
 // Membaca file JSON
-fs.readFile(filePath, 'utf8', (err, data) => {
+fs.readFile(args[0], 'utf8', (err, data) => {
 
     // Parsing JSON
     let tebakKata = JSON.parse(data)
-
-    if (!tebakKata || !Array.isArray(tebakKata)) {
-        console.error('Format file JSON tidak valid.')
-        process.exit(1)
-    }
 
     const rl = readline.createInterface({
         input: process.stdin,
