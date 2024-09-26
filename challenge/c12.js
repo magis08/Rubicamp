@@ -1,7 +1,6 @@
 const fs = require('fs')
 const readline = require('readline')
 
-// Mengambil file JSON dari argumen command line
 const args = process.argv.slice(2)
 
 if (args.length !== 1) {
@@ -25,7 +24,6 @@ fs.readFile(args[0], 'utf8', (err, data) => {
     let totalPertanyaan = tebakKata.length
     let totalSalah = 0 // Variabel untuk menghitung kesalahan
 
-    // Tampilkan pertanyaan pertama sekali saja
     const tanya = () => {
         if (pertanyaanIndex < totalPertanyaan) {
             console.log(`Pertanyaan: ${tebakKata[pertanyaanIndex].definition}`)
@@ -64,7 +62,7 @@ fs.readFile(args[0], 'utf8', (err, data) => {
         } else {
             totalSalah += 1 // Tambahkan kesalahan setiap jawaban salah
             console.log(`Kamu telah salah ${totalSalah}x. Silakan coba lagi.`)
-            rl.prompt() // Langsung ke interface tebakan tanpa mengulang pertanyaan
+            rl.prompt()
         }
     }).on('close', () => {
         process.exit(0)
