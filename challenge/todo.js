@@ -171,5 +171,5 @@ if (args[0] === 'add' && args.length > 1) {
     console.log('node todo.js listOutstanding')
     console.log('node todo.js completedDsc')
     console.log('node todo.js tag <task_id> <tag_name_1> <tag_name_2> ... <tag_name_N>')
-    console.log('node todo.js filter: <tag_name>')
+    console.log('node todo.js filter <tag_name>')
 }

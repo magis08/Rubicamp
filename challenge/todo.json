@@ -1,11 +1,15 @@
 {
   "todos": [
     {
-      "task": "naik haji",
+      "task": "main game",
+      "completed": false
+    },
+    {
+      "task": "mengaji",
       "completed": true
     },
     {
-      "task": "belajar programing",
+      "task": "memasak",
       "completed": false
     }
   ]
