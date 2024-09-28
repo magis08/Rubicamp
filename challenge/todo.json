@@ -5,12 +5,8 @@
       "completed": false
     },
     {
-      "task": "mengaji",
-      "completed": true
-    },
-    {
       "task": "memasak",
-      "completed": false
+      "completed": true
     }
   ]
 }

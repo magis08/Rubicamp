@@ -1,14 +1,14 @@
-const fs = require('fs')
-const args = process.argv.slice(2)
-const filePath = 'todo.json'
+const fs = require('fs') // Modul untuk operasi file
+const args = process.argv.slice(2) // Mengambil argumen dari command line
+const filePath = 'todo.json' // Path file JSON
 
-function fileExists(path) {
+function fileExists(path) { // memeriksa file ada atau tidak (pengaman)
     return fs.existsSync(path)
 }
 
-function readTodos() {
+function readTodos() { // read isi file JSON
     if (!fileExists(filePath)) {
-        return []
+        return [] 
     }
     const data = fs.readFileSync(filePath, 'utf8')
     const jsonData = JSON.parse(data)
@@ -16,70 +16,69 @@ function readTodos() {
     return jsonData.todos
 }
 
-function writeTodos(todos) {
+function writeTodos(todos) { // menimpa file JSON
     const jsonData = { todos: todos }
     fs.writeFileSync(filePath, JSON.stringify(jsonData, null, 2), 'utf8')
 }
 
-function addTodo(task) {
+function addTodo(task) { // fungsi add
     const todos = readTodos()
-    todos.push({ task: task, completed: false })
-    writeTodos(todos)
+    todos.push({ task: task, completed: false }) // add
+    writeTodos(todos) // timpa completed di file JSON dengan false (nilai inisial)
     console.log(`"${task}" telah ditambahkan.`)
 }
 
-function showTodos() {
+function showTodos() { // fungsi list
     const todos = readTodos()
     if (todos.length === 0) {
         console.log('Tidak ada kegiatan.')
     } else {
         console.log('Todo List:')
-        todos.forEach((todo, index) => {const status = todo.completed ? '[X]' : '[ ]'
+        todos.forEach((todo, index) => {const status = todo.completed ? '[X]' : '[ ]' // loop setiap tugas dan tentukan status
             console.log(`${index + 1}. ${status} ${todo.task}`)
             }
         )}
     }
 
-
-function deleteTodo(index) {
+function deleteTodo(index) { // fungsi delete
     const todos = readTodos()
     if (index < 1 || index > todos.length) {
         console.log('Tidak ada data.')
     } else {
-        const removedTask = todos.splice(index - 1, 1)
-        writeTodos(todos)
-        console.log(`"${removedTask[0].task}" telah dihapus.`) // Pastikan hanya properti "task" dicetak
+        const removedTask = todos.splice(index - 1, 1) // delete menggunakan splice
+        writeTodos(todos) // setelah didelete, timpa file JSON
+        console.log(`"${removedTask[0].task}" telah dihapus.`)
     }
 }
 
-function completeTask(index) {
+function completeTask(index) { // fungsi tugas selesai
     const todos = readTodos()
     if (index < 1 || index > todos.length) {
         console.log('Tidak ada data.')
     } else {
         todos[index - 1].completed = true
-        writeTodos(todos)
-        console.log(`"${todos[index - 1].task}" telah dilakukan.`) // Cetak hanya task
-    }
+        writeTodos(todos) // timpa index completed file JSON dengan true
+        console.log(`"${todos[index - 1].task}" telah dilakukan.`)
+        }
 }
 
-function uncompleteTask(index) {
+function uncompleteTask(index) { // fungsi tugas tidak selesai
     const todos = readTodos()
     if (index < 1 || index > todos.length) {
         console.log('Tidak ada data.')
     } else {
         todos[index - 1].completed = false
-        writeTodos(todos)
-        console.log(`"${todos[index - 1].task}" status selesai dibatalkan`) // Cetak hanya task dengan simbol [X]
+        writeTodos(todos) // timpa index completed file JSON dengan false
+        console.log(`"${todos[index - 1].task}" status selesai dibatalkan`)
     }
 }
-function listOutstanding() {
+function listOutstanding() { // fungsi untuk mengecek tugas yang belum dikerjakan
     const todos = readTodos()
-    let hasOutstanding = false
+    let hasOutstanding = false // buat variabel untuk cek apa ada tugas yang belum selesai
 
     console.log('Daftar pekerjaan:')
 
-    for (let i = 0; i < todos.length; i++) {
+    for (let i = 0; i < todos.length; i++) { // looping untuk mengecek tugas
         if (!todos[i].completed) {
             console.log(`${i + 1}. [ ] ${todos[i].task}`)
             hasOutstanding = true
@@ -89,26 +88,26 @@ function listOutstanding() {
         console.log('Semua tugas telah selesai.')
     }
 }
-function completedDesc() {
+function completedDesc() { // fungsi untuk mengecek tugas yang sudah selesai
     const todos = readTodos()
-    let hasOutstanding = true
+    let hasOutstanding = true // pakai variabel yang ada di listOutstanding
 
     console.log('Daftar perkerjaan:')
 
-    for (let i = 0; i < todos.length; i++) {
+    for (let i = 0; i < todos.length; i++) { // loop untuk mengecek tugas
         if (todos[i].completed) {
             console.log(`${i + 1}. [X] ${todos[i].task}`)
         }
     }
 }
 
-function filterTodos(keyword) {
+function filterTodos(keyword) { // fungsi untuk filter
     const todos = readTodos()
-    let hasMatches = false; // Flag untuk mengecek apakah ada tugas yang cocok
+    let hasMatches = false; // buat variabel untuk mengecek apakah ada tugas yang memiliki nama yang memiliki kata kunci yang cocok
 
     console.log(`Daftar pekerjaan:`)
 
-    for (let i = 0; i < todos.length; i++) {
+    for (let i = 0; i < todos.length; i++) { // loop untuk mengecek tugas
         if (todos[i].task.toLowerCase().includes(keyword.toLowerCase())) {
             const status = todos[i].completed ? '[X]' : '[ ]'
             console.log(`${i + 1}. ${status} ${todos[i].task}`)
@@ -120,7 +119,7 @@ function filterTodos(keyword) {
         console.log(`Tidak ada tugas yang cocok dengan kata kunci "${keyword}".`)
     }
 }
-
+// syarat-syarat argumen per fungsi
 if (args[0] === 'add' && args.length > 1) {
     const task = args.slice(1).join(' ')
     addTodo(task)
@@ -159,7 +158,7 @@ if (args[0] === 'add' && args.length > 1) {
         console.log('Tolong masukkan kata kunci yang valid untuk filter.')
     }
 }
- else {
+ else { // jika tidak ada perintah lanjutan, tampilkan ini
     console.log('>>> JS TODO <<<')
     console.log('node todo.js <command>')
     console.log('node todo.js list')
