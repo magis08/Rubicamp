@@ -8,7 +8,7 @@ function fileExists(path) { // memeriksa file ada atau tidak (pengaman)
 
 function readTodos() { // read isi file JSON
     if (!fileExists(filePath)) {
-        return [] 
+        return []
     }
     const data = fs.readFileSync(filePath, 'utf8')
     const jsonData = JSON.parse(data)
@@ -34,11 +34,12 @@ function showTodos() { // fungsi list
         console.log('Tidak ada kegiatan.')
     } else {
         console.log('Todo List:')
-        todos.forEach((todo, index) => {const status = todo.completed ? '[X]' : '[ ]' // loop setiap tugas dan tentukan status
-            console.log(`${index + 1}. ${status} ${todo.task}`)
-            }
-        )}
+        for (let i = 0; i < todos.length; i++) {
+            const status = todos[i].completed ? '[X]' : '[ ]' // Tentukan status
+            console.log(`${i + 1}. ${status} ${todos[i].task}`) // Tampilkan task dengan status
+        }
     }
+}
 
 function deleteTodo(index) { // fungsi delete
     const todos = readTodos()
@@ -51,6 +52,20 @@ function deleteTodo(index) { // fungsi delete
     }
 }
 
+function showTask(index) {
+    const todos = readTodos()
+    if (index < 1 || index > todos.length) {
+        console.log('Task tidak ditemukan.')
+    } else {
+        const todo = todos[index - 1]
+        const status = todo.completed ? 'sudah dilakukan' : 'belum dilakukan'
+        console.log(`Detail kegiatan:`)
+        console.log(`Task ${index} : ${todo.task}`)
+        console.log(status)
+    }
+
+}
+
 function completeTask(index) { // fungsi tugas selesai
     const todos = readTodos()
     if (index < 1 || index > todos.length) {
@@ -59,7 +74,7 @@ function completeTask(index) { // fungsi tugas selesai
         todos[index - 1].completed = true
         writeTodos(todos) // timpa index completed file JSON dengan true
         console.log(`"${todos[index - 1].task}" telah dilakukan.`)
-        }
+    }
 }
 
 function uncompleteTask(index) { // fungsi tugas tidak selesai
@@ -150,15 +165,22 @@ if (args[0] === 'add' && args.length > 1) {
     } else {
         console.log('Tolong masukan task yang valid')
     }
-}  else if (args[0] === 'filter' && args[1]) {
+} else if (args[0] === 'filter' && args[1]) {
     const keyword = args[1]
     if (keyword) {
         filterTodos(keyword)
     } else {
         console.log('Tolong masukkan kata kunci yang valid untuk filter.')
     }
+} else if (args[0] === 'task' && args[1]) {
+    const taskNumber = parseInt(args[1])
+    if (!isNaN(taskNumber)) {
+        showTask(taskNumber)
+    } else {
+        console.log('Tolong masukan task yang valid')
+    }
 }
- else { // jika tidak ada perintah lanjutan, tampilkan ini
+else { // jika tidak ada perintah lanjutan, tampilkan ini
     console.log('>>> JS TODO <<<')
     console.log('node todo.js <command>')
     console.log('node todo.js list')

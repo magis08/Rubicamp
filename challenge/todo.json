@@ -2,7 +2,7 @@
   "todos": [
     {
       "task": "main game",
-      "completed": false
+      "completed": true
     },
     {
       "task": "memasak",
