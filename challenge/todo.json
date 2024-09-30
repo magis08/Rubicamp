@@ -2,11 +2,19 @@
   "todos": [
     {
       "task": "main game",
-      "completed": true
+      "completed": true,
+      "tags": [
+        "HP",
+        "PUBG"
+      ]
     },
     {
-      "task": "memasak",
-      "completed": true
+      "task": "belajar",
+      "completed": false,
+      "tags": [
+        "pemrograman",
+        "javascript"
+      ]
     }
   ]
 }
