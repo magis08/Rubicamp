@@ -26,8 +26,12 @@
     },
     {
       "task": "bekerja",
-      "completed": false,
-      "tags": []
+      "completed": true,
+      "tags": [
+        "laptop",
+        "jobdesk",
+        "istirahat"
+      ]
     }
   ]
 }
