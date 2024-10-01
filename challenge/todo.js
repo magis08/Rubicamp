@@ -2,14 +2,7 @@ const fs = require('fs'); // Modul untuk operasi file
 const args = process.argv.slice(2); // Mengambil argumen dari command line
 const filePath = 'todo.json'; // Path file JSON
 
-function fileExists(path) { // Memeriksa file ada atau tidak (pengaman)
-    return fs.existsSync(path);
-}
-
 function readTodos() { // Membaca isi file JSON
-    if (!fileExists(filePath)) {
-        return [];
-    }
     const data = fs.readFileSync(filePath, 'utf8');
     const jsonData = JSON.parse(data);
     return jsonData.todos;
@@ -100,52 +93,60 @@ function tagTask(index, tags) { // Fungsi untuk menambahkan tag
     }
 }
 
-function listOutstanding() { // Fungsi untuk mengecek tugas yang belum dikerjakan
-    const todos = readTodos();
-    let hasOutstanding = false;
+function Outstanding(order = 'asc') {
+    const todos = readTodos().filter(todo => !todo.completed);
+    
+    if (order === 'desc') {
+        todos.sort((a, b) => (a.task > b.task ? -1 : 1));
+    } else {
+        todos.sort((a, b) => (a.task < b.task ? -1 : 1));
+    }
 
     console.log('Daftar pekerjaan:');
-    for (let i = 0; i < todos.length; i++) {
-        if (!todos[i].completed) {
-            console.log(`${i + 1}. [ ] ${todos[i].task}`);
-            hasOutstanding = true;
-        }
-    }
-    if (!hasOutstanding) {
+    if (todos.length === 0) {
         console.log('Semua tugas telah selesai.');
-    }
-}
-
-function completedDesc() { // Fungsi untuk mengecek tugas yang sudah selesai
-    const todos = readTodos();
-    let hasCompleted = false;
-
-    console.log('Daftar pekerjaan:');
-    for (let i = 0; i < todos.length; i++) {
-        if (todos[i].completed) {
-            console.log(`${i + 1}. [X] ${todos[i].task}`);
-            hasCompleted = true;
+    } else {
+        for (let i = 0; i < todos.length; i++) {
+            console.log(`${i + 1}. [ ] ${todos[i].task}`);
         }
     }
-    if (!hasCompleted) {
+}
+
+function completed(order = 'asc') {
+    const todos = readTodos().filter(todo => todo.completed);
+    
+    if (order === 'desc') {
+        todos.sort((a, b) => (a.task > b.task ? -1 : 1));
+    } else {
+        todos.sort((a, b) => (a.task < b.task ? -1 : 1));
+    }
+
+    console.log('Daftar pekerjaan:');
+    if (todos.length === 0) {
         console.log('Tidak ada tugas yang sudah selesai.');
+    } else {
+        for (let i = 0; i < todos.length; i++) {
+            console.log(`${i + 1}. [X] ${todos[i].task}`);
+        }
     }
 }
 
-function filterTodos(keyword) { // Fungsi untuk filter
+function filterTodos(tag) { // Fungsi untuk filter
     const todos = readTodos();
     let hasMatches = false;
 
-    console.log(`Daftar pekerjaan:`);
+    console.log(`Filter: ${tag}`);
     for (let i = 0; i < todos.length; i++) {
-        if (todos[i].task.toLowerCase().includes(keyword.toLowerCase())) {
+        if (todos[i].tags.includes(tag)) {
             const status = todos[i].completed ? '[X]' : '[ ]';
-            console.log(`${i + 1}. ${status} ${todos[i].task}`);
+            console.log(`Status: ${status} ${todos[i].task}`)
+            // console.log(`${i +1}. ${todos[i].task}`);
+            console.log(`Tag:${todos[i].tags.length > 0 ? todos[i].tags.join(',') : 'Tidak ada tag'}`)
             hasMatches = true;
         }
     }
     if (!hasMatches) {
-        console.log(`Tidak ada tugas yang cocok dengan kata kunci "${keyword}".`);
+        console.log(`Tidak ada tugas yang cocok dengan kata kunci "${tag}".`);
     }
 }
 
@@ -155,10 +156,10 @@ if (args[0] === 'add' && args.length > 1) {
     addTodo(task);
 } else if (args[0] === 'list') {
     showTodos();
-} else if (args[0] === 'listOutstanding') {
-    listOutstanding();
-} else if (args[0] === 'completedDsc') {
-    completedDesc();
+} else if (args[0] === 'list:Outstanding') {
+    Outstanding(args[1]);
+} else if (args[0] === 'list:completed') {
+    completed(args[1]);
 } else if (args[0] === 'delete' && args[1]) {
     const taskNumber = parseInt(args[1]);
     if (!isNaN(taskNumber)) {
@@ -180,7 +181,7 @@ if (args[0] === 'add' && args.length > 1) {
     } else {
         console.log('Tolong masukan task yang valid');
     }
-} else if (args[0] === 'filter' && args[1]) {
+} else if (args[0] === 'filter:' && args[1]) {
     const keyword = args[1];
     if (keyword) {
         filterTodos(keyword);
@@ -211,8 +212,8 @@ if (args[0] === 'add' && args.length > 1) {
     console.log('node todo.js delete <task_id>');
     console.log('node todo.js complete <task_id>');
     console.log('node todo.js uncomplete <task_id>');
-    console.log('node todo.js listOutstanding');
-    console.log('node todo.js completedDsc');
+    console.log('node todo.js list:Outstanding asc | desc');
+    console.log('node todo.js list:completed asc | desc');
     console.log('node todo.js tag <task_id> <tag_name_1> <tag_name_2> ... <tag_name_N>');
-    console.log('node todo.js filter <keyword>');
+    console.log('node todo.js filter:<tag_name>');
 }

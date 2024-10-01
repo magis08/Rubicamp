@@ -1,0 +1,34 @@
+PK = Primary Key
+FK = Foreign Key
+
+table mahasiswa
+======================================================================
+PK nim CHARACTER(10)      nama             alamat          jurusan
+======================================================================
+202000001             Cristiano Ronaldo    Lisbon          Agrikultur
+202100001             Lionel Messi         Rosario         Mesin
+202200001             Neymar Junior        Sao Paulo       Peternakan
+
+table jurusan
+======================================================================
+PK id CHARACTER(3)          namajurusan
+======================================================================
+J01                         Agrikultur
+J02                         Mesin
+J03                         Peternakan
+
+table dosen
+======================================================================
+PK id CHARACTER(3)          nama
+======================================================================
+001                      Carlo Anceloti
+002                      Jose Mourinho
+003                      Pep Guardiola
+
+table matakuliah
+======================================================================
+PK id CHARACTER(3)         nama                 SKS
+======================================================================
+M01                      Matematika              4
+M02                      Fisika                  3
+M03                      Kimia                   3
