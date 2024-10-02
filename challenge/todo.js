@@ -99,9 +99,9 @@ function Outstanding(order = 'asc') {
 
     // Mengurutkan berdasarkan nama task
     if (order === 'desc') {
-        outstandingTodos.sort((a, b) => (a.task > b.task ? 1 : -1)); // Urutkan descending
+        outstandingTodos.sort((a, b) => (a.task < b.task ? 1 : -1)); // Urutkan descending
     } else {
-        outstandingTodos.sort((a, b) => (a.task < b.task ? 1 : -1)); // Urutkan ascending
+        outstandingTodos.sort((a, b) => (a.task > b.task ? 1 : -1)); // Urutkan ascending
     }
 
     console.log('Daftar pekerjaan outstanding:');
