@@ -94,39 +94,45 @@ function tagTask(index, tags) { // Fungsi untuk menambahkan tag
 }
 
 function Outstanding(order = 'asc') {
-    const todos = readTodos().filter(todo => !todo.completed);
-    
+    const todos = readTodos(); // Ambil semua todos
+    const outstandingTodos = todos.filter(todo => !todo.completed); // Ambil tugas yang belum selesai
+
+    // Mengurutkan berdasarkan nama task
     if (order === 'desc') {
-        todos.sort((a, b) => (a.task > b.task ? -1 : 1));
+        outstandingTodos.sort((a, b) => (a.task > b.task ? 1 : -1)); // Urutkan descending
     } else {
-        todos.sort((a, b) => (a.task < b.task ? -1 : 1));
+        outstandingTodos.sort((a, b) => (a.task < b.task ? 1 : -1)); // Urutkan ascending
     }
 
-    console.log('Daftar pekerjaan:');
-    if (todos.length === 0) {
+    console.log('Daftar pekerjaan outstanding:');
+    if (outstandingTodos.length === 0) {
         console.log('Semua tugas telah selesai.');
     } else {
-        for (let i = 0; i < todos.length; i++) {
-            console.log(`${i + 1}. [ ] ${todos[i].task}`);
+        for (let i = 0; i < outstandingTodos.length; i++) {
+            const originalIndex = todos.findIndex(todo => todo.task === outstandingTodos[i].task);
+            console.log(`${originalIndex + 1}. [ ] ${outstandingTodos[i].task}`); // Tampilkan dengan indeks asli
         }
     }
 }
 
 function completed(order = 'asc') {
-    const todos = readTodos().filter(todo => todo.completed);
-    
+    const todos = readTodos(); // Ambil semua todos
+    const completedTodos = todos.filter(todo => todo.completed); // Ambil tugas yang belum selesai
+
+    // Mengurutkan berdasarkan nama task
     if (order === 'desc') {
-        todos.sort((a, b) => (a.task > b.task ? -1 : 1));
+        completedTodos.sort((a, b) => (a.task > b.task ? 1 : -1)); // Urutkan descending
     } else {
-        todos.sort((a, b) => (a.task < b.task ? -1 : 1));
+        completedTodos.sort((a, b) => (a.task < b.task ? 1 : -1)); // Urutkan ascending
     }
 
-    console.log('Daftar pekerjaan:');
-    if (todos.length === 0) {
-        console.log('Tidak ada tugas yang sudah selesai.');
+    console.log('Daftar pekerjaan outstanding:');
+    if (completedTodos.length === 0) {
+        console.log('Semua tugas telah selesai.');
     } else {
-        for (let i = 0; i < todos.length; i++) {
-            console.log(`${i + 1}. [X] ${todos[i].task}`);
+        for (let i = 0; i < completedTodos.length; i++) {
+            const originalIndex = todos.findIndex(todo => todo.task === completedTodos[i].task);
+            console.log(`${originalIndex + 1}. [X] ${completedTodos[i].task}`); // Tampilkan dengan indeks asli
         }
     }
 }
@@ -135,13 +141,12 @@ function filterTodos(tag) { // Fungsi untuk filter
     const todos = readTodos();
     let hasMatches = false;
 
-    console.log(`Filter: ${tag}`);
+    console.log(`Filter:${tag}`);
     for (let i = 0; i < todos.length; i++) {
         if (todos[i].tags.includes(tag)) {
             const status = todos[i].completed ? '[X]' : '[ ]';
-            console.log(`Status: ${status} ${todos[i].task}`)
-            // console.log(`${i +1}. ${todos[i].task}`);
-            console.log(`Tag:${todos[i].tags.length > 0 ? todos[i].tags.join(',') : 'Tidak ada tag'}`)
+            const originalIndex = todos.findIndex(todo => todo.task === todos[i].task)
+            console.log(`${originalIndex + 1}. ${status} ${todos[i].task}`)
             hasMatches = true;
         }
     }
@@ -181,8 +186,8 @@ if (args[0] === 'add' && args.length > 1) {
     } else {
         console.log('Tolong masukan task yang valid');
     }
-} else if (args[0] === 'filter:' && args[1]) {
-    const keyword = args[1];
+} else if (args[0] && args[0].includes('filter:')) {
+    const keyword = args[0].split(':')[1];
     if (keyword) {
         filterTodos(keyword);
     } else {

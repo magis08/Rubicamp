@@ -1,36 +1,28 @@
 {
   "todos": [
     {
-      "task": "belajar",
-      "completed": false,
-      "tags": [
-        "pemrograman",
-        "javascript"
-      ]
-    },
-    {
-      "task": "memasak nasi",
-      "completed": false,
-      "tags": [
-        "beras",
-        "magicom"
-      ]
-    },
-    {
-      "task": "main futsal",
-      "completed": false,
-      "tags": [
-        "bola",
-        "olahraga"
-      ]
-    },
-    {
-      "task": "bekerja",
+      "task": "main bola",
       "completed": true,
       "tags": [
-        "laptop",
-        "jobdesk",
-        "istirahat"
+        "bola",
+        "lapang"
+      ]
+    },
+    {
+      "task": "bermain game",
+      "completed": false,
+      "tags": []
+    },
+    {
+      "task": "belajar",
+      "completed": true,
+      "tags": []
+    },
+    {
+      "task": "pergi ke stadion",
+      "completed": false,
+      "tags": [
+        "bola"
       ]
     }
   ]
