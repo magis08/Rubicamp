@@ -13,7 +13,7 @@ WHERE nim = 'A002';
 
 --1. menampilkan data seluruh mahasiswa
 SELECT mahasiswa.nim, mahasiswa.nama, mahasiswa.alamat, mahasiswa.jurusan, jurusan.namajurusan
-FROM mahasiswa, jurusan;
+FROM mahasiswa JOIN jurusan ON mahasiswa.jurusan = jurusan.kodejurusan;
 
 --2. menampilkan mahasiswa yang berumur kurang dari 20 tahun
 SELECT nim, nama, tgllahir FROM mahasiswa
