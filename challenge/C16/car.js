@@ -13,8 +13,8 @@ class Car {
         this.tyre = tyre;
         this.doors = doors;
         this.seats = seats;
-        this.year = year;  // Tetap menggunakan parameter year
-        this.sn = CarFactory.generateSerialNumber();  // Static method untuk serial number
+        this.year = year;
+        this.sn = CarFactory.generateSerialNumber();
         this.warranty = this.calculateWarranty();     // Menghitung garansi
     }
 
@@ -42,7 +42,7 @@ class CarFactory {
     
 
     // Method untuk memproduksi mobil
-    produce(year) {  // Menggunakan parameter year
+    produce(year) {
         this.cars = []
         const variants = [
             { variant: 'Agya', tyre: new Tyre('dunlop', 15), doors: 5, seats: 5 },
@@ -61,7 +61,7 @@ class CarFactory {
                 selectedVariant.tyre,
                 selectedVariant.doors,
                 selectedVariant.seats,
-                year  // Tahun tidak diacak lagi, tapi menggunakan year dari parameter
+                year
             );
             this.cars.push(car);
 
@@ -71,7 +71,7 @@ class CarFactory {
             console.log(`door: ${car.doors}`);
             console.log(`seat: ${car.seats} Seater`);
             console.log(`tyre: ${car.tyre.brand} ${car.tyre.size} inch`);
-            console.log(`year: ${car.year}`);  // Menampilkan year dari parameter
+            console.log(`year: ${car.year}`);
             console.log(`warranty: ${car.warranty} year\n`);
         }
     }
