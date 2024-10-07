@@ -42,10 +42,10 @@ class CarFactory {
         this.cars = []
         const variants = [
             { variant: 'Agya', tyre: new Tyre('Dunlop', 15), doors: 5, seats: 5 },
-            { variant: 'Rush', tyre: new Tyre('Bridgestone', 17), doors: 5, seats: 7 },
+            { variant: 'Rush', tyre: new Tyre('Bridgestone', 17), doors: 5, seats: 5 },
         ];
 
-        console.log(`Hasil Produksi:`);
+        console.log(`hasil Produksi:`);
 
         // Menghasilkan mobil secara acak
         for (let i = 0; i < 12; i++) {
@@ -61,14 +61,14 @@ class CarFactory {
             );
             this.cars.push(car);
 
-            console.log(`No. ${i + 1}`);
-            console.log(`Varian: ${car.variant}`);
-            console.log(`SN: ${car.sn}`);
-            console.log(`Door: ${car.doors}`);
-            console.log(`Seat: ${car.seats} Seater`);
-            console.log(`Tyre: ${car.tyre.brand} ${car.tyre.size} inch`);
-            console.log(`Year: ${car.year}`);  // Menampilkan year dari parameter
-            console.log(`Warranty: ${car.warranty} Year(s)\n`);
+            console.log(`no. ${i + 1}`);
+            console.log(`varian: ${car.variant}`);
+            console.log(`sn: ${car.sn}`);
+            console.log(`door: ${car.doors}`);
+            console.log(`seat: ${car.seats} Seater`);
+            console.log(`tyre: ${car.tyre.brand} ${car.tyre.size} inch`);
+            console.log(`year: ${car.year}`);  // Menampilkan year dari parameter
+            console.log(`warranty: ${car.warranty} year\n`);
         }
     }
 
@@ -80,15 +80,15 @@ class CarFactory {
             const carAge = simulationYear - car.year;
             const warrantyStatus = carAge > car.warranty ? 'Expired' : 'Active';
 
-            console.log(`No. ${index + 1}`);
-            console.log(`Varian: ${car.variant}`);
-            console.log(`SN: ${car.sn}`);
-            console.log(`Door: ${car.doors}`);
-            console.log(`Seat: ${car.seats} Seater`);
-            console.log(`Tyre: ${car.tyre.brand} ${car.tyre.size} inch`);
-            console.log(`Year: ${car.year}`);
-            console.log(`Warranty: ${car.warranty} Year`);
-            console.log(`Status on ${simulationYear}: This guarantee status is ${warrantyStatus}\n`);
+            console.log(`no. ${index + 1}`);
+            console.log(`varian: ${car.variant}`);
+            console.log(`sn: ${car.sn}`);
+            console.log(`door: ${car.doors}`);
+            console.log(`seat: ${car.seats} Seater`);
+            console.log(`tyre: ${car.tyre.brand} ${car.tyre.size} inch`);
+            console.log(`year: ${car.year}`);
+            console.log(`warranty: ${car.warranty} year\n`);
+            console.log(`status on ${simulationYear}: This guarantee status is ${warrantyStatus}\n`);
         });
     }
 }
