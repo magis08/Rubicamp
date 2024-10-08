@@ -18,7 +18,7 @@ class LargeTyre extends Tyre { // inheritance
 }
 
 class Car {
-    constructor(variant, tyre, doors, seats, year) {
+    constructor(variant, tyre, doors, seats, year, warranty) {
         this.variant = variant;
         this.tyre = tyre;
         this.doors = doors;
@@ -31,6 +31,20 @@ class Car {
     // Method untuk menghitung garansi berdasarkan ukuran ban
     calculateWarranty() {
         return this.tyre.size === 17 ? 3 : 1;
+    }
+    tyreType(tyre) {
+        this.tyre = tyre;
+    }
+}
+class Agya extends Car {
+    constructor(year) {
+        super('Agya', new SmallTyre('dunlop'), 5, 5, year);
+    }
+}
+
+class Rush extends Car {
+    constructor(year) {
+        super('Rush', new LargeTyre('bridgestone'), 5, 5, year);
     }
 }
 
@@ -50,22 +64,13 @@ class CarFactory {
     }
 
     produce(year) {
-        const variants = [
-            { variant: 'Agya', tyre: new SmallTyre('dunlop'), doors: 5, seats: 5 },
-            { variant: 'Rush', tyre: new LargeTyre('bridgestone'), doors: 5, seats: 5 },
-        ];
+        const variants = [Agya, Rush];
 
         for (let i = 0; i < 6; i++) {
             const randomIndex = Math.floor(Math.random() * variants.length);
-            const selectedVariant = variants[randomIndex];
+            const SelectedCar = variants[randomIndex]; // Pilih kelas varian mobil
 
-            const car = new Car(
-                selectedVariant.variant,
-                selectedVariant.tyre,
-                selectedVariant.doors,
-                selectedVariant.seats,
-                year
-            );
+            const car = new SelectedCar(year); // Buat objek mobil dari kelas varian
             this.cars.push(car);
         }
     }
