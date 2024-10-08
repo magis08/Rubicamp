@@ -1,4 +1,3 @@
-// Class Ban (Tyre)
 class Tyre {
     constructor(brand, size) {
         this.brand = brand;
@@ -6,7 +5,18 @@ class Tyre {
     }
 }
 
-// Class Mobil (Car)
+class SmallTyre extends Tyre { // inheritance
+    constructor(brand) {
+        super(brand, 15); // SmallTyre 15 inch
+    }
+}
+
+class LargeTyre extends Tyre { // inheritance
+    constructor(brand) {
+        super(brand, 17); // LargeTyre 17 inch
+    }
+}
+
 class Car {
     constructor(variant, tyre, doors, seats, year) {
         this.variant = variant;
@@ -15,19 +25,18 @@ class Car {
         this.seats = seats;
         this.year = year;
         this.sn = CarFactory.generateSerialNumber();
-        this.warranty = this.calculateWarranty();     // Menghitung garansi
+        this.warranty = this.calculateWarranty(); // Menghitung garansi
     }
 
-    // Prototype method untuk menghitung garansi berdasarkan ukuran ban
+    // Method untuk menghitung garansi berdasarkan ukuran ban
     calculateWarranty() {
         return this.tyre.size === 17 ? 3 : 1;
     }
 }
 
-// Class Pabrik Mobil (CarFactory)
 class CarFactory {
     constructor() {
-        this.cars = [];
+        this.cars = []; // List untuk menyimpan mobil yang sudah diproduksi
     }
 
     // Static method untuk menghasilkan serial number
@@ -39,20 +48,14 @@ class CarFactory {
         }
         return serial;
     }
-    
 
-    // Method untuk memproduksi mobil
     produce(year) {
-        this.cars = []
         const variants = [
-            { variant: 'Agya', tyre: new Tyre('dunlop', 15), doors: 5, seats: 5 },
-            { variant: 'Rush', tyre: new Tyre('bridgestone', 17), doors: 5, seats: 5 },
+            { variant: 'Agya', tyre: new SmallTyre('dunlop'), doors: 5, seats: 5 },
+            { variant: 'Rush', tyre: new LargeTyre('bridgestone'), doors: 5, seats: 5 },
         ];
 
-        console.log(`hasil Produksi :`);
-
-        // Menghasilkan mobil secara acak
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < 6; i++) {
             const randomIndex = Math.floor(Math.random() * variants.length);
             const selectedVariant = variants[randomIndex];
 
@@ -64,8 +67,13 @@ class CarFactory {
                 year
             );
             this.cars.push(car);
+        }
+    }
 
-            console.log(`no. ${i + 1}`);
+    result() {
+        console.log(`Hasil Produksi :`);
+        this.cars.forEach((car, index) => {
+            console.log(`no. ${index + 1}`);
             console.log(`varian: ${car.variant}`);
             console.log(`sn: ${car.sn}`);
             console.log(`door: ${car.doors}`);
@@ -73,13 +81,11 @@ class CarFactory {
             console.log(`tyre: ${car.tyre.brand} ${car.tyre.size} inch`);
             console.log(`year: ${car.year}`);
             console.log(`warranty: ${car.warranty} year\n`);
-        }
+        });
     }
 
-    // Method untuk simulasi garansi
     guaranteeSimulation(simulationYear) {
-        console.log(`\nhasil simulasi garansi semua mobil pada tahun ${simulationYear} :\n`);
-
+        console.log(`\nHasil Simulasi Garansi Semua Mobil pada Tahun ${simulationYear} :\n`);
         this.cars.forEach((car, index) => {
             const carAge = simulationYear - car.year;
             const warrantyStatus = carAge > car.warranty ? 'Expired' : 'Active';
@@ -91,14 +97,14 @@ class CarFactory {
             console.log(`seat: ${car.seats} Seater`);
             console.log(`tyre: ${car.tyre.brand} ${car.tyre.size} inch`);
             console.log(`year: ${car.year}`);
-            console.log(`warranty: ${car.warranty} year\n`);
+            console.log(`warranty: ${car.warranty} year`);
             console.log(`status on ${simulationYear}: this guarantee status is ${warrantyStatus}\n`);
         });
     }
 }
 
-// Driver Code
 const toyota = new CarFactory();
 toyota.produce(2020);
 toyota.produce(2022);
+toyota.result();
 toyota.guaranteeSimulation(2025);
