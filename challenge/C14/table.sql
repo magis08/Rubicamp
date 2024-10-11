@@ -8,7 +8,7 @@ CREATE TABLE jurusan (
 CREATE TABLE mahasiswa (
     nim CHAR(8) PRIMARY KEY,
     nama VARCHAR(20) NOT NULL,
-    alamat VARCHAR(50) NOT NULL,
+    alamat VARCHAR(50) NOT NULL, -- pake TEXT lebih bagus
     jurusan CHAR(2),
     FOREIGN KEY (jurusan) REFERENCES jurusan(kodejurusan)
 );
@@ -23,7 +23,7 @@ CREATE TABLE dosen (
 CREATE TABLE matakuliah (
     kodemk CHAR(5) PRIMARY KEY,
     namamk VARCHAR(20) NOT NULL,
-    sks CHAR(2) NOT NULL,
+    sks CHAR(2) NOT NULL, -- pake INT lebih bagus
     dosen CHAR(8),
     FOREIGN KEY (dosen) REFERENCES dosen(nip)
 );
