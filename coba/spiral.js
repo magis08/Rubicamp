@@ -1,7 +1,7 @@
 function spiral(param1) {
     // Membuat array 2D yang kosong
     const spiralArray = Array.from({ length: param1 }, () => Array(param1).fill(0));
-    
+
     // Inisialisasi variabel untuk batasan
     let left = 0, right = param1 - 1;
     let top = 0, bottom = param1 - 1;
@@ -15,14 +15,14 @@ function spiral(param1) {
             result.push(num++);
         }
         top++;
-        
+
         // Mengisi kolom kanan
         for (let i = top; i <= bottom; i++) {
             spiralArray[i][right] = num;
             result.push(num++);
         }
         right--;
-        
+
         // Mengisi baris bawah
         if (top <= bottom) {
             for (let i = right; i >= left; i--) {
@@ -31,7 +31,7 @@ function spiral(param1) {
             }
             bottom--;
         }
-        
+
         // Mengisi kolom kiri
         if (left <= right) {
             for (let i = bottom; i >= top; i--) {
