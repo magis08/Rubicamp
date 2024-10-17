@@ -33,7 +33,7 @@ CREATE TABLE dosen (
 CREATE TABLE matakuliah (
     kodemk CHAR(5) PRIMARY KEY,
     namamk VARCHAR(20) NOT NULL,
-    sks CHAR(2) NOT NULL, -- pake INT lebih bagus
+    sks INT NOT NULL,
     dosen CHAR(8),
     FOREIGN KEY (dosen) REFERENCES dosen(nip)
 );
@@ -70,6 +70,13 @@ INSERT INTO matakuliah (kodemk, namamk, sks, dosen) VALUES ('MK002', 'Basis Data
 INSERT INTO assignment (nim, kodemk, nip, nilai) VALUES ('A001', 'MK001', '12345', 'A');
 INSERT INTO assignment (nim, kodemk, nip, nilai) VALUES ('A002', 'MK001', '12345', 'A');
 
+UPDATE assignment
+SET namamk = (
+    SELECT namamk
+    FROM matakuliah
+    WHERE matakuliah.kodemk = assignment.kodemk
+);
+
 
 -- tgllahir
 SELECT nama, tgllahir, 
@@ -77,5 +84,5 @@ SELECT nama, tgllahir,
        - (STRFTIME('%m-%d', 'now') < STRFTIME('%m-%d', tgllahir)) 
        AS umur
 FROM mahasiswa;
-
+UPDATE mahasiswa SET tgllahir = '2005-06-24' WHERE nim = 'A001';
 UPDATE mahasiswa SET tgllahir = '2003-02-05' WHERE nim = 'A002';
