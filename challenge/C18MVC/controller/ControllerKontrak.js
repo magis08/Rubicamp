@@ -1,5 +1,5 @@
 import ViewKontrak from '../view/ViewKontrak.js'
-import Utama, { rl } from '../c18.mjs'
+import Utama, { rl } from '../c18.js'
 import ModelKontrak from '../model/ModelKontrak.js'
 
 export default class Kontrak {

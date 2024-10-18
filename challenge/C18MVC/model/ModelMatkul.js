@@ -1,5 +1,5 @@
-import { db } from "../c18.mjs";
-import Utama, { rl } from "../c18.mjs";
+import { db } from "../c18.js";
+import Utama, { rl } from "../c18.js";
 import Table from "cli-table3";
 import Matkul from "../controller/ControllerMatkul.js";
 import ViewMatkul from "../view/ViewMatkul.js";

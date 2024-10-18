@@ -1,5 +1,5 @@
 import ViewMahasiswa from '../view/ViewMahasiswa.js';
-import Utama, { rl } from '../c18.mjs';
+import Utama, { rl } from '../c18.js';
 import ModelMahasiswa from '../model/ModelMahasiswa.js';
 
 export default class Mahasiswa {

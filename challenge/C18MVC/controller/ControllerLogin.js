@@ -1,5 +1,5 @@
 import ViewLogin from '../view/ViewLogin.js';
-import Utama, { rl } from '../c18.mjs';
+import Utama, { rl } from '../c18.js';
 import ModelLogin from '../model/ModelLogin.js';
 
 export default class users {

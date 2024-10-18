@@ -1,5 +1,5 @@
 import ViewDosen from '../view/ViewDosen.js'
-import Utama, { rl } from '../c18.mjs'
+import Utama, { rl } from '../c18.js'
 import ModelDosen from '../model/ModelDosen.js'
 
 export default class Dosen {

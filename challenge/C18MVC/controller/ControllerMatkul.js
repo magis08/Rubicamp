@@ -1,5 +1,5 @@
 import ViewMatkul from '../view/ViewMatkul.js'
-import Utama, { rl } from '../c18.mjs'
+import Utama, { rl } from '../c18.js'
 import ModelMatkul from '../model/ModelMatkul.js'
 
 export default class Matkul {

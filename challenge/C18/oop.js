@@ -663,25 +663,18 @@ class Kontrak {
     }
 
     static searchKontrak(nim) {
-        const query = `
-                SELECT assignment.id, mahasiswa.nim, mahasiswa.nama, matakuliah.kodemk, matakuliah.namamk, dosen.nip, dosen.namadosen, assignment.nilai 
-                FROM assignment
-                JOIN mahasiswa ON assignment.nim = mahasiswa.nim
-                JOIN matakuliah ON assignment.kodemk = matakuliah.kodemk
-                JOIN dosen ON assignment.nip = dosen.nip`;
-
-        db.all(query, (err, rows) => {
+        db.all("SELECT mahasiswa.nim, mahasiswa.nama, mahasiswa.tgllahir, mahasiswa.alamat, jurusan.kodejurusan, mahasiswa.jurusan, jurusan.namajurusan FROM mahasiswa JOIN jurusan ON mahasiswa.jurusan = jurusan.kodejurusan", (err, rows) => {
             if (err) {
-                console.error("Gagal menampilkan data assignment:", err.message);
+                console.error("Gagal menampilkan data mahasiswa:", err.message);
             } else {
                 const table = new Table({
-                    head: ['ID', 'NIM', 'Nama Mahasiswa', 'Mata Kuliah', 'Dosen', 'Nilai'],
-                    colWidths: [5, 10, 20, 20, 20, 10]
+                    head: ['NIM', 'Nama', 'Tanggal Lahir', 'Alamat', 'Kode Jurusan', 'Jurusan'],
+                    colWidths: [10, 20, 20, 30, 20, 20]
                 });
                 rows.forEach(row => {
-                    table.push([row.id, row.nim, row.nama, row.namamk, row.namadosen, row.nilai]);
+                    table.push([row.nim, row.nama, row.tgllahir, row.alamat, row.kodejurusan, row.namajurusan]);
                 });
-                console.log(table.toString());
+                console.log(table.toString()); // Menampilkan tabel mahasiswa
             }
             rl.question(`Masukkan NIM mahasiswa yang ingin dicari: `, (nim) => {
                 const queryDetail = `
@@ -712,26 +705,66 @@ class Kontrak {
     }
 
     static addKontrak() {
-        rl.question("Masukkan NIM Mahasiswa: ", (nim) => {
-
-            rl.question("Masukkan Kode MK: ", (kodemk) => {
-
-                rl.question("Masukkan NIP Dosen: ", (nip) => {
-
-                    const query = `INSERT INTO assignment (nim, kodemk, nip) VALUES (?, ?, ?)`;
-
-                    db.run(query, [nim, kodemk, nip], (err) => {
-                        if (err) {
-                            console.error("Gagal menambah data kontrak:", err.message);
-                        } else {
-                            console.log("Data kontrak berhasil ditambahkan.");
-                        }
-                        Kontrak.displayAssignmentMenu(); // Kembali ke menu assignment setelah menambah data
-                    });
+        db.all("SELECT mahasiswa.nim, mahasiswa.nama, mahasiswa.tgllahir, mahasiswa.alamat, jurusan.kodejurusan, mahasiswa.jurusan, jurusan.namajurusan FROM mahasiswa JOIN jurusan ON mahasiswa.jurusan = jurusan.kodejurusan", (err, rows) => {
+            if (err) {
+                console.error("Gagal menampilkan data mahasiswa:", err.message);
+            } else {
+                const table = new Table({
+                    head: ['NIM', 'Nama', 'Tanggal Lahir', 'Alamat', 'Kode Jurusan', 'Jurusan'],
+                    colWidths: [10, 20, 20, 30, 20, 20]
                 });
-            });
-        });
-    };
+                rows.forEach(row => {
+                    table.push([row.nim, row.nama, row.tgllahir, row.alamat, row.kodejurusan, row.namajurusan]);
+                });
+                console.log(table.toString()); // Menampilkan tabel mahasiswa
+            }
+            rl.question("Masukkan NIM Mahasiswa: ", (nim) => {
+                db.all("SELECT matakuliah.kodemk, matakuliah.namamk FROM matakuliah", (err, rows) => {
+                    if (err) {
+                        console.error("Gagal menampilkan data matakuliah:", err.message);
+                    } else {
+                        const table = new Table({
+                            head: ['Kode MK', 'Nama MK'],
+                            colWidths: [10, 30]
+                        });
+                        rows.forEach(row => {
+                            table.push([row.kodemk, row.namamk]);
+                        });
+                        console.log(table.toString()); // Menampilkan tabel matakuliah
+                    }
+                    rl.question("Masukkan Kode MK: ", (kodemk) => {
+                        db.all("SELECT * FROM dosen", (err, rows) => {
+                            if (err) {
+                                console.error("Gagal menampilkan data dosen:", err.message);
+                            } else {
+                                const table = new Table({
+                                    head: ['NIP', 'Nama Dosen'],
+                                    colWidths: [15, 30]
+                                });
+                                rows.forEach(row => {
+                                    table.push([row.nip, row.namadosen]);
+                                });
+                                console.log(table.toString()); // Menampilkan tabel dosen
+                            }
+                            rl.question("Masukkan NIP Dosen: ", (nip) => {
+
+                                const query = `INSERT INTO assignment (nim, kodemk, nip) VALUES (?, ?, ?)`;
+
+                                db.run(query, [nim, kodemk, nip], (err) => {
+                                    if (err) {
+                                        console.error("Gagal menambah data kontrak:", err.message);
+                                    } else {
+                                        console.log("Data kontrak berhasil ditambahkan.");
+                                    }
+                                    Kontrak.displayAssignmentMenu(); // Kembali ke menu assignment setelah menambah data
+                                });
+                            });
+                        });
+                    });
+                })
+            })
+        })
+    }
 
     static deleteKontrak() {
         rl.question("Masukkan ID kontrak yang ingin dihapus: ", (id) => {
@@ -750,43 +783,64 @@ class Kontrak {
     }
 
     static updateKontrak() {
-        rl.question("Masukkan NIM kontrak yang ingin diupdate: ", (nim) => {
-            const query = `
+        const query = `
+                SELECT assignment.id, mahasiswa.nim, mahasiswa.nama, matakuliah.namamk, dosen.namadosen, assignment.nilai 
+                FROM assignment
+                JOIN mahasiswa ON assignment.nim = mahasiswa.nim
+                JOIN matakuliah ON assignment.kodemk = matakuliah.kodemk
+                JOIN dosen ON assignment.nip = dosen.nip`;
+
+        db.all(query, (err, rows) => {
+            if (err) {
+                console.error("Gagal menampilkan data assignment:", err.message);
+            } else {
+                const table = new Table({
+                    head: ['ID', 'NIM', 'Nama Mahasiswa', 'Mata Kuliah', 'Dosen', 'Nilai'],
+                    colWidths: [5, 10, 20, 20, 20, 10]
+                });
+                rows.forEach(row => {
+                    table.push([row.id, row.nim, row.nama, row.namamk, row.namadosen, row.nilai]);
+                });
+                console.log(table.toString()); // Menampilkan tabel assignment dengan kolom yang diinginkan
+            }
+            rl.question("Masukkan NIM kontrak yang ingin diupdate: ", (nim) => {
+                const query = `
                 SELECT assignment.id, mahasiswa.nim, mahasiswa.nama, matakuliah.namamk, dosen.namadosen, assignment.nilai 
                 FROM assignment
                 JOIN mahasiswa ON assignment.nim = mahasiswa.nim
                 JOIN matakuliah ON assignment.kodemk = matakuliah.kodemk
                 JOIN dosen ON assignment.nip = dosen.nip WHERE mahasiswa.nim = ?`;
-            db.all(query, [nim], (err, rows) => {
-                if (err) {
-                    console.error("Gagal menampilkan data assignment:", err.message);
-                } else {
-                    const table = new Table({
-                        head: ['ID', 'Matakuliah', 'Nilai'],
-                        colWidths: [5, 20, 10]
-                    });
-                    rows.forEach(row => {
-                        table.push([row.id, row.namamk, row.nilai]);
-                    });
-                    console.log(table.toString()); // Menampilkan tabel assignment dengan kolom yang diinginkan
-                }
+                db.all(query, [nim], (err, rows) => {
+                    if (err) {
+                        console.error("Gagal menampilkan data assignment:", err.message);
+                    } else {
+                        const table = new Table({
+                            head: ['ID', 'Matakuliah', 'Nilai'],
+                            colWidths: [5, 20, 10]
+                        });
+                        rows.forEach(row => {
+                            table.push([row.id, row.namamk, row.nilai]);
+                        });
+                        console.log(table.toString()); // Menampilkan tabel assignment dengan kolom yang diinginkan
+                    }
 
-                rl.question("Masukkan id yang akan diubah nilainya: ", (id) => {
-                    rl.question("Masukkan nilai baru: ", (nilaiBaru) => {
-                        const query = `UPDATE assignment SET nilai = ? WHERE id = ?`;
-                        db.run(query, [nilaiBaru, id], function (err) {
-                            if (err) {
-                                console.error("Gagal memperbarui data kontrak:", err.message);
-                            } else if (this.changes === 0) {
-                                console.log(`Kontrak dengan ID '${id}' tidak ditemukan.`);
-                            } else {
-                                console.log(`Nilai kontrak dengan ID '${id}' berhasil diperbarui menjadi '${nilaiBaru}'.`);
-                            }
-                            Kontrak.displayAssignmentMenu(); // Kembali ke menu assignment setelah memperbarui data
+                    rl.question("Masukkan id yang akan diubah nilainya: ", (id) => {
+                        rl.question("Masukkan nilai baru: ", (nilaiBaru) => {
+                            const query = `UPDATE assignment SET nilai = ? WHERE id = ?`;
+                            db.run(query, [nilaiBaru, id], function (err) {
+                                if (err) {
+                                    console.error("Gagal memperbarui data kontrak:", err.message);
+                                } else if (this.changes === 0) {
+                                    console.log(`Kontrak dengan ID '${id}' tidak ditemukan.`);
+                                } else {
+                                    console.log(`Nilai kontrak dengan ID '${id}' berhasil diperbarui menjadi '${nilaiBaru}'.`);
+                                }
+                                Kontrak.displayAssignmentMenu(); // Kembali ke menu assignment setelah memperbarui data
+                            });
                         });
                     });
                 });
-            });
+            })
         })
     }
 }

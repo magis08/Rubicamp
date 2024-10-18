@@ -1,4 +1,4 @@
-import { db } from '../c18.mjs';
+import { db } from '../c18.js';
 
 export default class ModelLogin {
     static findUser(username, callback) {

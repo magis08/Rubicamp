@@ -1,5 +1,5 @@
 import ViewJurusan from '../view/ViewJurusan.js'
-import Utama, { rl } from '../c18.mjs'
+import Utama, { rl } from '../c18.js'
 import ModelJurusan from '../model/ModelJurusan.js'
 
 export default class Jurusan {
