@@ -14,17 +14,10 @@
     "married": true
   },
   {
-    "name": "Aziz",
-    "height": 167,
-    "weight": 57.5,
-    "birthdate": "1996-05-13",
-    "married": false
-  },
-  {
-    "name": "Cole Palmer",
-    "height": 189,
-    "weight": 79,
-    "birthdate": "2002-06-05",
-    "married": false
+    "name": "madueke",
+    "height": 175,
+    "weight": 66,
+    "birthdate": "2002-02-12",
+    "married": true
   }
 ]

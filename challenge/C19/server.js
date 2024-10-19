@@ -73,13 +73,12 @@ const server = http.createServer((req, res) => {
           res.write('<html><head><title></title>');
           res.write('<link rel="stylesheet" href="/style.css">');
           res.write('</head><body>');
-          res.write('<h1></h1>');
-          res.write('<form method="POST" action="/add" style="width: 100vw; max-width: 600px; margin: 0 auto;">');
+          res.write('<h2><form method="POST" action="/add" style="width: 100vw; max-width: 600px; margin: 0 auto;"></h2>');
           res.write('<input type="text" name="name" placeholder="input name" required/><br/>');
           res.write('<input type="number" name="height" placeholder="input height (cm)" required/><br/>');
           res.write('<input type="number" name="weight" placeholder="input weight (kg)" required/><br/>');
           res.write('<input type="date" name="birthdate" required/><br/>');
-          res.write('Married: <select name="married"><option value="false">Not Yet</option><option value="true">Yes</option></select><br/>');
+          res.write('<select name="married" required><option value="" disabled selected>Have you married?</option><option value="false">Not Yet</option><option value="true">Yes</option></select><br/>');
           res.write('<input type="submit" value="Save" style="margin-top: 10px;"/>');
           res.write('<input type="button" value="Cancel" onclick="window.location.href=\'/\'" style="margin-top: 10px;"/>');
           res.write('</form>');
