@@ -1,0 +1,140 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: rgb(206, 211, 211);
+}
+
+h1 {
+    display: block;
+    color: #263238;
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table,
+th,
+td {
+    border: 2px solid #050505;
+    padding: 8px;
+    text-align: left;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+a {
+    color: #008cba;
+    text-decoration: none;
+}
+
+a.create-link {
+    display: block;
+    background-color: rgb(38, 0, 128);
+    color: white;
+    padding: 12px 0px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: left;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    margin-bottom: 4px;
+    box-sizing: border-box;
+}
+
+a.create-link:hover {
+    background-color: #ddd;
+}
+
+form {
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100vw;
+    max-width: 600px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+form input,
+form select {
+    margin-bottom: 10px;
+    padding: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+input[type="submit"] { 
+    display: block;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 12px 0px;
+    font-size: 16px;
+    border-radius: 4px;
+    width: 100%; 
+    margin-top: 10px; 
+    transition: background-color 0.3s ease;
+}
+input[type="button"] { 
+    display: block;
+    background-color: #653cfa;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 12px 0px;
+    font-size: 16px;
+    border-radius: 4px;
+    width: 100%; 
+    margin-top: 10px; 
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+input[type="button"]:hover {
+    background-color: #6758f3;
+}
+
+a.create-link {
+    background-color: rgb(38, 0, 128);
+    color: white;
+    padding: 12px 0px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
