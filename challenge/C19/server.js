@@ -50,9 +50,9 @@ const server = http.createServer((req, res) => {
             <td>${item.height}</td>
             <td>${item.weight}</td>
             <td>${item.birthdate}</td>
-            <td>${item.married ? 'Yes' : 'No'}</td>
+            <td>${item.married ? 'Yes' : 'Not Yet'}</td>
             <td>
-              <a href="/edit/${index}">Edit</a> | 
+              <a href="/edit/${index}">Update</a> 
               <a href="/delete/${index}" onclick="return confirm('Yakin ingin menghapus?')">Delete</a>
             </td>
           </tr>`);
@@ -76,7 +76,7 @@ const server = http.createServer((req, res) => {
           res.write('<h2><form method="POST" action="/add" style="width: 100vw; max-width: 600px; margin: 0 auto;"></h2>');
           res.write('<input type="text" name="name" placeholder="input name" required/><br/>');
           res.write('<input type="number" name="height" placeholder="input height (cm)" required/><br/>');
-          res.write('<input type="number" name="weight" placeholder="input weight (kg)" required/><br/>');
+          res.write('<input type="number" name="weight" placeholder="input weight (kg)" required min="0" step="0.01"/><br/>');
           res.write('<input type="date" name="birthdate" required/><br/>');
           res.write('<select name="married" required><option value="" disabled selected>Have you married?</option><option value="false">Not Yet</option><option value="true">Yes</option></select><br/>');
           res.write('<input type="submit" value="Save" style="margin-top: 10px;"/>');
@@ -132,11 +132,11 @@ const server = http.createServer((req, res) => {
           <form method="POST" action="/edit/${index}">
           Name: <input type="text" name="name" value="${person.name}"/><br/>
           Height: <input type="number" name="height" value="${person.height}"/><br/>
-          Weight: <input type="number" name="weight" value="${person.weight}"/><br/>
+          Weight: <input type="number" name="weight" value="${person.weight}" min="0" step="0.01"/><br/>
           Birthdate: <input type="date" name="birthdate" value="${person.birthdate}"/><br/>
           is Married: <select name="married"><option value="false" ${!person.married ? 'selected' : ''}>Not Yet</option><option value="true" ${person.married ? 'selected' : ''}>Yes</option></select><br/>
           <input type="submit" value="Save"/>
-          <input type="button" value="Cancel" onclick="window.location.href=\'/\'">
+          <input type="button" value="Cancel" onclick="window.location.href='/'">
           </form>`);
         res.write('</body></html>');
         res.end();

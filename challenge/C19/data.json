@@ -4,20 +4,27 @@
     "height": 168,
     "weight": 80.52,
     "birthdate": "1996-03-12",
-    "married": false
+    "married": true
   },
   {
     "name": "Rahmat",
     "height": 171,
     "weight": 57.699,
     "birthdate": "1996-11-03",
-    "married": true
+    "married": false
   },
   {
-    "name": "madueke",
-    "height": 175,
+    "name": "Cole Palmer",
+    "height": 189,
+    "weight": 78,
+    "birthdate": "2002-07-24",
+    "married": false
+  },
+  {
+    "name": "Agis",
+    "height": 178,
     "weight": 66,
-    "birthdate": "2002-02-12",
+    "birthdate": "1998-03-08",
     "married": true
   }
 ]

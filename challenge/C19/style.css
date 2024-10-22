@@ -1,24 +1,18 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: serif;
     margin: 20px;
-    background-color: rgb(206, 211, 211);
+    background-color: rgb(240, 243, 243);
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-}
-
-table,
-th,
-td {
-    border: 2px solid #050505;
-    padding: 8px;
-    text-align: left;
+    border: 1px solid #bdc2f1;
 }
 
 th,
 td {
+    border: none;
     padding: 8px;
     text-align: left;
 }
@@ -27,18 +21,18 @@ th {
     background-color: #f2f2f2;
 }
 
-tr:nth-child(odd) {
-    background-color: #f2f2f2;
+tr:nth-child(even) {
+    background-color: #dcddf8;
 }
 
 a {
-    color: #008cba;
-    text-decoration: none;
+    color: #653cfa;
+    text-decoration: underline;
 }
 
 a.create-link {
     display: block;
-    background-color: rgb(38, 0, 128);
+    background-color: rgb(7, 50, 190);
     color: white;
     padding: 12px 0px;
     border: none;
@@ -53,7 +47,7 @@ a.create-link {
 }
 
 a.create-link:hover {
-    background-color: #ddd;
+    background-color: rgb(20, 42, 243);
 }
 
 form input,
@@ -138,17 +132,3 @@ input[type="submit"]:hover {
 input[type="button"]:hover {
     background-color: #6758f3;
 }
-
-a.create-link {
-    background-color: rgb(38, 0, 128);
-    color: white;
-    padding: 12px 0px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-    text-align: center;
-    text-decoration: none;
-    margin-bottom: 10px;
-}
-
