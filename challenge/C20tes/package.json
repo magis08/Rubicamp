@@ -1,0 +1,11 @@
+{
+  "name": "bread-app",
+  "version": "1.0.0",
+  "description": "CRUD app with Node.js, EJS, SQLite",
+  "main": "app.js",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "sqlite3": "^5.0.0"
+  }
+}
