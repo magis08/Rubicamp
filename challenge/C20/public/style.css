@@ -5,11 +5,22 @@ body {
     padding: 0;
 }
 
-h1 {
-    text-align: center;
-    background-color: #d3d3d3;
-    margin-top: 20px;
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.card-header h1 {
+    background-color: rgb(248, 248, 248);
+    color: black;
+    margin: 0;
     padding: 15px;
+    text-align: center;
+}
+
+.card-body {
+    padding: 20px;
 }
 
 .container {
@@ -63,7 +74,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: rgb(17, 217, 243);
+    background-color: rgb(17, 181, 215);
 }
 
 button[type="button"] {
@@ -84,7 +95,8 @@ table {
     table-layout: fixed;
 }
 
-th, td {
+th,
+td {
     padding: 8px;
     text-align: left;
     white-space: nowrap;
@@ -162,59 +174,63 @@ a.create-link:hover {
     border: 1px solid #007bff;
 }
 
-/* Tambahkan gaya untuk kolom actions */
 .actions {
-    display: flex; /* Menggunakan flexbox untuk menjaga agar tombol tetap terlihat */
-    gap: 5px; /* Memberikan jarak antara tombol */
+    display: flex;
+    gap: 5px;
 }
 
-.delete-button, .update-button {
-    display: inline-block; /* Pastikan tombol ditampilkan */
-    margin: 5px; /* Jarak antar tombol */
-    padding: 10px; /* Tambahkan padding */
-    background-color: red; /* Warna latar belakang untuk tombol delete */
-    color: white; /* Warna teks */
-    border: none; /* Tanpa border */
-    border-radius: 4px; /* Sudut halus */
+.delete-button,
+.update-button {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 4px;
 }
 
 .update-button {
-    background-color: blue; /* Warna latar belakang untuk tombol update */
+    background-color: blue;
 }
 
-
-/* Media Queries */
 @media (max-width: 768px) {
     table {
         font-size: 14px;
     }
 
-    th, td {
+    th,
+    td {
         padding: 6px;
     }
 
-    .create-link, button[type="submit"], button[type="button"] {
+    .create-link,
+    button[type="submit"],
+    button[type="button"] {
         width: 80px;
         font-size: 14px;
     }
 }
 
 @media (max-width: 480px) {
-    th:nth-child(3), 
-    td:nth-child(3), 
-    th:nth-child(4), 
-    td:nth-child(4), 
-    th:nth-child(6), 
+
+    th:nth-child(3),
+    td:nth-child(3),
+    th:nth-child(4),
+    td:nth-child(4),
+    th:nth-child(6),
     td:nth-child(6) {
         display: none;
     }
-    
+
     .actions {
-        flex-direction: column; /* Ubah tampilan menjadi kolom untuk layar kecil */
-        align-items: flex-start; /* Rata kiri tombol */
+        flex-direction: column;
+        align-items: flex-start;
     }
 
-    .create-link, button[type="submit"], button[type="button"] {
+    .create-link,
+    button[type="submit"],
+    button[type="button"] {
         width: 70px;
         font-size: 12px;
         padding: 5px 8px;
