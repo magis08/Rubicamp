@@ -9,11 +9,12 @@ h1 {
     text-align: center;
     background-color: #d3d3d3;
     margin-top: 20px;
-    padding: 10px;
+    padding: 15px;
 }
 
 .container {
-    width: 1600px;
+    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     padding: 0 15px;
 }
@@ -26,7 +27,6 @@ h1 {
 
 .inline-form-group label {
     width: 150px;
-    /* Lebar label tetap untuk keselarasan */
 }
 
 input[type="text"],
@@ -59,6 +59,7 @@ button[type="button"] {
 
 button[type="submit"] {
     background-color: rgb(16, 202, 240);
+    width: 100px;
 }
 
 button[type="submit"]:hover {
@@ -67,6 +68,7 @@ button[type="submit"]:hover {
 
 button[type="button"] {
     background-color: rgb(255, 192, 7);
+    width: 100px;
 }
 
 button[type="button"]:hover {
@@ -79,11 +81,15 @@ table {
     margin-top: 20px;
     color: #333;
     font-size: 16px;
+    table-layout: fixed;
 }
 
 th, td {
     padding: 8px;
     text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 tr {
@@ -112,7 +118,7 @@ a.create-link {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: 15%;
+    width: 100px;
     text-align: center;
     text-decoration: none;
     margin-top: 10px;
@@ -127,20 +133,12 @@ a.create-link:hover {
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
-  }
-  
-  .pagination {
+}
+
+.pagination {
     display: flex;
     gap: 5px;
-  }
-  
-  .create-link {
-    text-decoration: none;
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
-  }  
+}
 
 .pagination a {
     color: #007bff;
@@ -162,4 +160,63 @@ a.create-link:hover {
 .pagination a:hover:not(.active) {
     background-color: #ddd;
     border: 1px solid #007bff;
+}
+
+/* Tambahkan gaya untuk kolom actions */
+.actions {
+    display: flex; /* Menggunakan flexbox untuk menjaga agar tombol tetap terlihat */
+    gap: 5px; /* Memberikan jarak antara tombol */
+}
+
+.delete-button, .update-button {
+    display: inline-block; /* Pastikan tombol ditampilkan */
+    margin: 5px; /* Jarak antar tombol */
+    padding: 10px; /* Tambahkan padding */
+    background-color: red; /* Warna latar belakang untuk tombol delete */
+    color: white; /* Warna teks */
+    border: none; /* Tanpa border */
+    border-radius: 4px; /* Sudut halus */
+}
+
+.update-button {
+    background-color: blue; /* Warna latar belakang untuk tombol update */
+}
+
+
+/* Media Queries */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 6px;
+    }
+
+    .create-link, button[type="submit"], button[type="button"] {
+        width: 80px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    th:nth-child(3), 
+    td:nth-child(3), 
+    th:nth-child(4), 
+    td:nth-child(4), 
+    th:nth-child(6), 
+    td:nth-child(6) {
+        display: none;
+    }
+    
+    .actions {
+        flex-direction: column; /* Ubah tampilan menjadi kolom untuk layar kecil */
+        align-items: flex-start; /* Rata kiri tombol */
+    }
+
+    .create-link, button[type="submit"], button[type="button"] {
+        width: 70px;
+        font-size: 12px;
+        padding: 5px 8px;
+    }
 }
