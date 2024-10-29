@@ -10,44 +10,49 @@
 
 <body>
     <div class="container">
-        <h1>Adding Data</h1>
-
-        <!-- Form Tambah Data -->
-        <form method="post" action="/add" class="add-form">
-            <div class="inline-form-group">
-                <label for="name">Name</label>
-                <input type="text" name="name" id="name" placeholder="Insert your name" required>
+        <div class="card">
+            <div class="card-header">
+                <h1>Adding Data</h1>
             </div>
+            <div class="card-body">
+                <!-- Form Tambah Data -->
+                <form method="post" action="/add" class="add-form">
+                    <div class="inline-form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" placeholder="Insert your name" required>
+                    </div>
 
-            <div class="inline-form-group">
-                <label for="height">Height (cm)</label>
-                <input type="number" name="height" id="height" placeholder="Insert your height" required>
-            </div>
+                    <div class="inline-form-group">
+                        <label for="height">Height (cm)</label>
+                        <input type="number" name="height" id="height" placeholder="Insert your height" required>
+                    </div>
 
-            <div class="inline-form-group">
-                <label for="weight">Weight (kg)</label>
-                <input type="number" name="weight" id="weight" placeholder="Insert your weight" required>
-            </div>
+                    <div class="inline-form-group">
+                        <label for="weight">Weight (kg)</label>
+                        <input type="number" name="weight" id="weight" placeholder="Insert your weight" required>
+                    </div>
 
-            <div class="inline-form-group">
-                <label for="birthdate">Birth Date</label>
-                <input type="date" name="birthdate" id="birthdate" required>
-            </div>
+                    <div class="inline-form-group">
+                        <label for="birthdate">Birth Date</label>
+                        <input type="date" name="birthdate" id="birthdate" required>
+                    </div>
 
-            <div class="inline-form-group">
-                <label>Is Married</label>
-                <label>
-                    <input type="radio" name="isMarried" value="0" required> Not Yet
-                </label>
-                <label>
-                    <input type="radio" name="isMarried" value="1"> Yes
-                </label>
-            </div>
+                    <div class="inline-form-group">
+                        <label>Is Married</label>
+                        <label>
+                            <input type="radio" name="isMarried" value="0" required> Not Yet
+                        </label>
+                        <label>
+                            <input type="radio" name="isMarried" value="1"> Yes
+                        </label>
+                    </div>
 
-            <div class="form-buttons">
-                <button type="submit">Add</button>
-                <button type="button" class="cancel-link" onclick="window.location.href='/'">Cancel</button>
+                    <div class="form-buttons">
+                        <button type="submit">Add</button>
+                        <button type="button" class="cancel-link" onclick="window.location.href='/'">Cancel</button>
+                    </div>
             </div>
+        </div>
     </div>
     </form>
 
