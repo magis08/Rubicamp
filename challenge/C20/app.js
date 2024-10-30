@@ -32,9 +32,15 @@ app.get('/', (req, res) => {
   if (name) whereClause.push(`name LIKE '%${name}%'`);
   if (height) whereClause.push(`height = ${height}`);
   if (weight) whereClause.push(`weight = ${weight}`);
-  if (birthdateMin) whereClause.push(`birthdate >= '${birthdateMin}'`);
-  if (birthdateMax) whereClause.push(`birthdate <= '${birthdateMax}'`);
+  if (birthdateMin && birthdateMax) {
+    whereClause.push(`birthdate BETWEEN '${birthdateMin}' AND '${birthdateMax}'`);
+  } else if (birthdateMin) {
+    whereClause.push(`birthdate >= '${birthdateMin}'`);
+  } else if (birthdateMax) {
+    whereClause.push(`birthdate <= '${birthdateMax}'`);
+  }
   if (isMarried === '1' || isMarried === '0') whereClause.push(`married = ${isMarried}`);
+  
 
   const operator = operation === 'OR' ? 'OR' : 'AND';
   let sql = `SELECT * FROM persons ${whereClause.length ? `WHERE ${whereClause.join(` ${operator} `)}` : ''} LIMIT ? OFFSET ?`;
@@ -68,7 +74,7 @@ app.get('/add', (req, res) => {
 
 // Route untuk menangani tambah data
 app.post('/add', (req, res) => {
-  const { name, height, weight, birthdate, isMarried } = req.body;
+  const { name, height, weight, birthdate, isMarried} = req.body;
   const married = isMarried === '1' ? 1 : 0; // Mengonversi nilai string menjadi angka
 
   // Simpan data ke database atau array sesuai dengan implementasi Anda
@@ -83,7 +89,6 @@ app.post('/add', (req, res) => {
       });
 });
 
-// Route untuk menampilkan form edit data
 // Route untuk menampilkan form edit data
 app.get('/edit/:id', (req, res) => {
   const id = req.params.id;
