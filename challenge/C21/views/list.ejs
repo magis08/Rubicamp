@@ -28,26 +28,21 @@
                 <fieldset class="row mb-3">
                     <legend class="col-form-label col-sm-2 pt-0">Operation</legend>
                     <div class="col-sm-10">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
-                                value="option1" checked>
-                            <label class="form-check-label" for="gridRadios1">
-                                OR
+                        <div>
+                            <label style="margin-right: 15px;">
+                                <input type="radio" name="operation" name="Operation" id="option1" checked> OR
                             </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2"
-                                value="option2">
-                            <label class="form-check-label" for="gridRadios2">
-                                AND
+                            <label>
+                                <input type="radio" name="operation" name="Operation" id="option1"> AND
                             </label>
                         </div>
                     </div>
-        </div>
         </fieldset>
-        <button type="submit" class="btn btn-primary">Sign in</button>
-        </form>
-
+        <div style="margin-bottom: 10px;">
+            <button type="submit" class="btn btn-primary" style="margin-right: 8px;">Search</button>
+            <button type="submit" class="btn btn-primary">Reset</button>
+            </form>
+        </div>
     </div>
     <table class="table table-striped">
         <thead>
@@ -101,5 +96,6 @@
         </nav>
 
     </div>
+    <a href="/add" class="btn btn-primary"> Add</a>
     </div>
     <%- include('partials/footer.ejs') %>
