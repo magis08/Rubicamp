@@ -1,27 +1,33 @@
 <%- include('partials/header.ejs') %>
     <div class="card">
         <div class="card-header text-center">
-            <h1>PostgreSQL Breads(Browse,Read,Edit,Add,Delete,Sort)</h1>
+            <h1>PostgreSQL Breads (Browse, Read, Edit, Add, Delete, Sort)</h1>
         </div>
         <div class="card-body">
             <form>
                 <div class="row mb-3">
-                    <label for="nameTitle" class="col-sm-2 col-form-label">Title</label>
+                    <label for="title" class="col-sm-2 col-form-label">Title</label>
                     <div class="col-sm-10">
-                        <input type="title" class="form-control" id="nameTitle">
+                        <input type="text" class="form-control" id="title" name="title" value="<%= title || '' %>">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="deadline" class="col-sm-2 col-form-label">Deadline</label>
-                    <div class="col-sm-10">
-                        <input type="date" class="form-control" id="deadline">
+                    <div class="col-sm-10 d-flex align-items-center">
+                        <input type="date" class="form-control me-2" name="deadlineMin"
+                            value="<%= deadlineMin || '' %>">
+                        <span class="range-separator me-2" style="width: 400px; text-align: center;">s.d.</span>
+                        <input type="date" class="form-control" name="deadlineMax" value="<%= deadlineMax || '' %>">
                     </div>
+
                 </div>
                 <div class="row mb-3">
                     <label for="complete" class="col-sm-2 col-form-label">Complete</label>
                     <div class="col-sm-10">
-                        <select type="option" class="form-control" id="complete">
-                            <option value="">-- select complete status --</option>
+                        <select name="complete" id="complete" class="form-control">
+                            <option value="">-select complete-</option>
+                            <option value="false" <% complete==='false' ? 'selected' : '' %>>not yet</option>
+                            <option value="true" <% complete==='true' ? 'selected' : '' %>>yes</option>
                         </select>
                     </div>
                 </div>
@@ -30,20 +36,24 @@
                     <div class="col-sm-10">
                         <div>
                             <label style="margin-right: 15px;">
-                                <input type="radio" name="operation" name="Operation" id="option1" checked> OR
+                                <input type="radio" name="operation" value="OR" <% if (operation==='OR' || !operation) {
+                                    %> checked <% } %>> OR
                             </label>
                             <label>
-                                <input type="radio" name="operation" name="Operation" id="option1"> AND
+                                <input type="radio" name="operation" value="AND" <% if (operation==='AND' ) { %> checked
+                                <% } %>> AND
                             </label>
                         </div>
                     </div>
-        </fieldset>
-        <div style="margin-bottom: 10px;">
-            <button type="submit" class="btn btn-primary" style="margin-right: 8px;">Search</button>
-            <button type="submit" class="btn btn-primary">Reset</button>
+                </fieldset>
+                <div class="d-flex mb-3" style="gap: 8px;">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                    <a href="/" class="btn btn-warning">Reset</a>
+                </div>
             </form>
         </div>
     </div>
+    <hr>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -51,20 +61,20 @@
                 <th scope="col">Title</th>
                 <th scope="col">Complete</th>
                 <th scope="col">Deadline</th>
-                <th scope="col">actions</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
-            <% data.forEach((item, index)=> {%>
+            <% data.forEach((item, index)=> { %>
                 <tr>
                     <th scope="row">
-                        <%= index + 1 %>
+                        <%= index + offset + 1 %>
                     </th>
                     <td>
                         <%= item.title %>
                     </td>
                     <td>
-                        <%= item.complete %>
+                        <%= item.complete ? 'yes' : 'not yet' %>
                     </td>
                     <td>
                         <%= item.deadline %>
@@ -76,7 +86,9 @@
                 <% }) %>
         </tbody>
     </table>
-    <div class="card-footer">
+
+    <div class="card-footer d-flex justify-content-between">
+        <a href="/add" class="btn btn-primary">Add</a>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item">
@@ -84,18 +96,17 @@
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
+                <% for(let i=1; i <=pages; i++){ %>
+                    <li class="page-item<% page == i ? 'active ' : ''%>"><a class="page-link" href="/?page=<%= i %>">
+                            <%= i %>
+                        </a></li>
+                    <% } %>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
             </ul>
         </nav>
-
-    </div>
-    <a href="/add" class="btn btn-primary"> Add</a>
     </div>
     <%- include('partials/footer.ejs') %>
