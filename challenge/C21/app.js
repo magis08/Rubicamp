@@ -3,22 +3,17 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-// const { pool } = require ('pg')
+const { Pool } = require ('pg')
 
-// const pool = new Pool({
-//   user: 'agis',
-//   password: '12345',
-//   host: 'localhist',
-//   port: 5432,
-//   database: 'mydb',
-// })
+const pool = new Pool({
+  user: 'agis',
+  password: '12345',
+  host: 'localhost',
+  port: 5432,
+  database: 'cobadb',
+})
 
- 
-// // you can also use async/await
-// const res = await pool.query('SELECT NOW()')
-// await pool.end()
-
-var indexRouter = require('./routes/index');
+var indexRouter = require('./routes/index')(pool);
 var usersRouter = require('./routes/users');
 
 var app = express();
