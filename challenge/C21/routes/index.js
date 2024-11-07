@@ -1,83 +1,63 @@
 var express = require('express');
+const { hashPassword } = require('../helpers/util');
 var router = express.Router();
+const bcrypt = require('bcrypt')
 
 module.exports = function (db) {
 
   router.get('/', function (req, res, next) {
-    const { page = 1, title, deadlineMin, deadlineMax, complete, operation = 'OR' } = req.query
-    const queries = []
-    const params = []
-    const op = (operation && operation.toUpperCase() === 'OR') ? 'OR' : 'AND'
-
-    if (title) {
-      params.push(title)
-      queries.push(`title ilike '%' || $${params.length} || '%'`)
-    }
-
-    if (complete) {
-      params.push(complete)
-      queries.push(`complete = $${params.length} `)
-    }
-
-    if (deadlineMin && deadlineMax) {
-      params.push(deadlineMin, deadlineMax);
-      queries.push(`deadline BETWEEN $${params.length - 1} AND $${params.length}`);
-    } else if (deadlineMin) {
-      params.push(deadlineMin);
-      queries.push(`deadline >= $${params.length}`);
-    } else if (deadlineMax) {
-      params.push(deadlineMax);
-      queries.push(`deadline <= $${params.length}`);
-    }
-
-    const limit = 5
-    const offset = (page - 1) * limit
-    let sql = 'select count(*) as total from todos'
-    if (queries.length > 0) {
-      sql += ` where ${queries.join(` ${op} `)}`
-    }
-
-    db.query(sql, params, (err, data) => {
-      if (err) return res.send(err)
-
-      const total = data.rows[0].total
-      const pages = Math.ceil(total / limit)
-
-      sql = `SELECT * FROM todos`
-      if (queries.length > 0) {
-        sql += ` where ${queries.join(` ${op} `)}`
-      }
-
-      sql += ` limit $${params.length + 1} offset $${params.length + 2}`
-
-      db.query(sql, [...params, limit, offset], (err, data) => {
-        if (err) return res.send(err)
-        res.render('list', {
-          title,
-          complete,
-          data: data.rows,
-          pages,
-          page: parseInt(page),
-          offset,
-          operation,
-          deadlineMin,
-          deadlineMax
-        });
-      })
-    })
+    res.render('login')
   });
 
-  router.get('/add', function (req, res, next) {
-    res.render('form')
+  router.get('/register', function (req, res, next) {
+    res.render('register')
+  });
+
+  router.post('/', async function (req, res, next) {
+    const { email, password } = req.body
+    try {
+      const { rows } = await db.query('SELECT * FROM users WHERE email = $1 LIMIT 1', [email])
+      if (rows.length === 0) {
+        return res.send("Email not found!")
+      }
+      const user = rows[0]
+      const isPasswordCorrect = await bcrypt.compare(password, user.password);
+      if (!isPasswordCorrect) {
+        return res.send("Incorrect password!");
+      }
+      req.session.user = {
+        id: user.id,
+        email: user.email
+      }
+      res.redirect('/users')
+    } catch (e) {
+      console.log(e)
+      res.send('Something went wrong')
+    }
   })
 
-  router.post('/add', function (req, res, next) {
-    const { title } = req.body
-    db.query('INSERT INTO todos (title) VALUES ($1)', [title], (err, data) => {
-      if (err) return res.send(err)
+  router.post('/register', async function (req, res, next) {
+    const { email, password, repassword } = req.body
+    try {
+      if (password !== repassword) {
+        return res.send("password doesn't match!")
+      }
+      const { rows } = await db.query('SELECT * FROM users WHERE email = $1 LIMIT 1', [email])
+      if (rows.length > 0) {
+        return res.send("email already used")
+      }
+      const { rows: users } = await db.query('INSERT INTO users(email, password) VALUES($1, $2) RETURNING *', [email, hashPassword(password)])
+      req.session.user = {
+        id: users[0].id,
+        email: users[0].email
+      }
+
       res.redirect('/')
-    })
-  })
+    } catch (e) {
+      console.log(e)
+      res.send('something went wrong')
+    }
+  });
 
   return router;
 }

@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const { Pool } = require ('pg')
+var session = require('express-session')
 
 const pool = new Pool({
   user: 'agis',
@@ -14,7 +15,7 @@ const pool = new Pool({
 })
 
 var indexRouter = require('./routes/index')(pool);
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/users')(pool);
 
 var app = express();
 
@@ -27,6 +28,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: 'agis0803',
+  resave: false,
+  saveUninitialized: true
+}))
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
