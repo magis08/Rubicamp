@@ -1,5 +1,4 @@
 var express = require('express');
-const { hashPassword } = require('../helpers/util');
 var router = express.Router();
 const bcrypt = require('bcrypt')
 
@@ -46,7 +45,8 @@ module.exports = function (db) {
       if (rows.length > 0) {
         return res.send("email already used")
       }
-      const { rows: users } = await db.query('INSERT INTO users(email, password) VALUES($1, $2) RETURNING *', [email, hashPassword(password)])
+      const hashPassword = await bcrypt.hashSync(password, 10);
+      const { rows: users } = await db.query('INSERT INTO users(email, password) VALUES($1, $2) RETURNING *', [email, hashPassword])
       req.session.user = {
         id: users[0].id,
         email: users[0].email
